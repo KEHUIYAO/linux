@@ -1,0 +1,24 @@
+eg：
+find -name "*.frag" -exec dos2unix {} \;
+find -name "*.s" -exec rm -f {} \; 
+find 命令查找文件名为 .frag 的文件，并将这些文件替换到 {} 部分从而进行删除。 ';' 前的参数都作为 rm 的参数， '/' 则是对 ';' 进行 escape（转义）。
+
+find /etc/rc.d -name ’*crond’ -exec file {} ＼;
+查找/etc/rc.d目录下面所有以crond结束的文件，并使用file指令查看其属性，注意：exec和file间是一个空格，file和{}间是一个空格，{}和＼;之间是一个空格，＼;是一个整体。
+
+http://hi.baidu.com/smallchicken/blog/item/4fe00218bdca050a34fa41d7.html
+find 命令-exec选项粗解
+为何是粗解？因为解释并不会太详细，如果需要更加详细，自己man一下。
+find 命令的 -exec 和 -execdir 还有 -ok  用来对找到的文件执行命令，{}表示文件名
+区别：
+-exec command ;  
+-exec选项对找到的文件执行命令，传递的文件名是绝对路径，分号必须，通常为了防止shell解释分号，需要添加\转义，即 \; 结束该命令，也可以使用引号括起来，比如 ';' 这样
+例，列出所有 mp3 文件：
+find . -name "*.mp3" -exec ls {} \;   
+find可以同时执行多个命令，比如 先查找，再复制
+find . -name "*.mp3" -exec ls {} \; -exec  cp {} /home/sin/Music/ \;
+多个命令之间分别以 -exec开头，然后接命令。每一个文件都会挨个执行所有命令
+
+    -execdir 和 -exec一样，不同的是，如果你传递的查找路径中含有绝对路径，那么 -execdir 仍是相对路径，而 -exec就会是绝对路径，
+
+比如：find /home/fix/Music/ -name "*.mp3" -exec ls {} ';'
