@@ -22,3 +22,8 @@ find . -name "*.mp3" -exec ls {} \; -exec  cp {} /home/sin/Music/ \;
     -execdir 和 -exec一样，不同的是，如果你传递的查找路径中含有绝对路径，那么 -execdir 仍是相对路径，而 -exec就会是绝对路径，
 
 比如：find /home/fix/Music/ -name "*.mp3" -exec ls {} ';'
+
+
+find 目录 -name "*.abc" | xargs rm
+命令很危险, 你先执行前半段试试看 是不是你要删除的文件, 在整条执行
+
